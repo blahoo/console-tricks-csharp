@@ -3,198 +3,328 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
-namespace Another
+
+using System.IO;
+using System.Xml.Linq;
+
+namespace Another3
 {
     internal class Program
     {
-        static void letterCallBack()
+        static void Save1()
         {
-            Console.WriteLine("LETTER CALL BACK");
-            //Console.Read gives a number which can be converted back into char
-            //it only takes the first character
-            Console.WriteLine("type something");
-            char character = Convert.ToChar(Console.Read());
-            Console.WriteLine(character);
-            //end
-            Console.WriteLine("-----\n");
-        }
-        static void stringIndex()
-        {
-            Console.WriteLine("STRING INDEX");
-            //starting phrase, \n creates a line break
-            string phrase = "There once was an old and wise man, \nHe didn't like being old, \nBut he liked being wise";
-            Console.WriteLine(phrase);
-            //input
-            Console.Write("Start: ");
-            int indexStart = Convert.ToInt32(Console.ReadLine());
-            Console.Write("End: ");
-            int indexEnd = Convert.ToInt32(Console.ReadLine());
-            //output
-            Console.WriteLine(phrase.Substring(indexStart, indexEnd));
-            //end
-            Console.WriteLine("-----\n");
-        }
-        static void largerNumber()
-        {
-            Console.WriteLine("LARGER NUMBER");
-            //introduction
-            Console.WriteLine("Give some numbers!");
-            //input
-            Console.Write("Input 1: ");
-            int number1 = Convert.ToInt32(Console.ReadLine());
-            Console.Write("Input 2: ");
-            int number2 = Convert.ToInt32(Console.ReadLine());
-            //output
-            Console.WriteLine("\nOutput:" + Math.Max(number1, number2));
-            //end
-            Console.WriteLine("-----\n");
-        }
-        static int powerFunc(ref int Exponent, int Base)
-        {
-            if (Exponent == 1)
+            Console.WriteLine("yo");
+
+            string hi = File.ReadAllText("TextFile1.txt");
+            if (int.TryParse(hi, out int yn))
             {
-                return Base;
+                Console.WriteLine(hi);
             }
-            Exponent--;
-            return Base * powerFunc(ref Exponent, Base);
-        }
-        static void waitTime()
-        {
-            Console.WriteLine("hi");
-            System.Threading.Thread.Sleep(1000);
-            Console.WriteLine("hi");
-            System.Threading.Thread.Sleep(1000);
-            Console.WriteLine("hi");
-            System.Threading.Thread.Sleep(1000);
-            Console.WriteLine("hi");
-            System.Threading.Thread.Sleep(1000);
-            Console.WriteLine("hi");
-        }
-        static void randLetter()
-        {
-            //have to instantiate an object or var from the random class in order to use .Next 
-            Random rnd = new Random();
-            int randIndex = rnd.Next(0, 25);
-            char[] arr = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
-                'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
-                'w', 'x', 'y', 'z'}; 
-            Console.WriteLine(arr[randIndex]);
-        }
-        static void randLetter2()
-        {
-            //have to instantiate an object or var from the random class in order to use .Next            
-            Random rnd = new Random();
-            int randIndex = rnd.Next(0, 25);
-            string aph = "abcdefghijklmnopqrstuvwxyz";
-            Console.WriteLine(aph[randIndex]);
-            /*
-            randLetter2 uses a string to hold character data,
-            accessing the letters by using the string as an array
-            */
-        }
-        static void questionMark()
-        {
-            Console.Write("select y/n :");
-            string msg = Console.ReadLine();
-            string answer = (msg == "y") ? "yes" : "no";
-            Console.WriteLine(answer);
-        }
-        static void experimentInput()
-        {
-            //ReadLine in WriteLine???
-            Console.WriteLine("EXPERIMENT INPUT");
-            Console.WriteLine("Your input was " + Console.ReadLine() + " and " + Console.ReadLine());
-            //end
-            Console.WriteLine("-----\n");
-        }
-        static void experimentArr()
-        {
-            Console.WriteLine("EXPERIMENT ARR");
-            Console.WriteLine("pick a number from 0 to 7");
-            int k = Convert.ToInt32(Console.ReadLine());
-            bool[] tralse = { true, false, true, false, true, false, true, false };
-            if (tralse[k])
-                Console.WriteLine("this is true");
             else
-                Console.WriteLine("this is false");
+            {
+                Console.WriteLine("u suck");
+            }
+            File.WriteAllText("TextFile1.txt", "1");
         }
-        static void experimentArr2()
+        static void Save2()
         {
-            Console.WriteLine("EXPERIMENT ARR2");
-            int[,] arr = new int[3, 3];
-            arr[2, 2] = 1;
-            int x = Convert.ToInt32(Console.ReadLine());
-            int y = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine(arr[x, y]);
-            int[,] otharr = { { 1, 2, 3, }, { 4, 5, 6, }, { 6, 7, 8, } };
-            Console.WriteLine(otharr[x, y]);
+            Console.WriteLine();
+
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyGame.txt");
+            string text_to_be_saved = "Some text to be saved...";
+            File.WriteAllText(path, text_to_be_saved);
+
+            // to load:
+
+            string loaded_text = File.ReadAllText(path);
+            Console.WriteLine(loaded_text);
         }
-        static void experimentStringPlaceholders()
+        static void Save3()
         {
-            //"{index}" placeholderValue
-            string name = "John";
-            int age = 27;
-            Console.WriteLine("Hi, my name is {0}, and I am {1}", name, age);
+            //check current data
+
+            Console.WriteLine("enter \"1\" to check current data");
+            if (Console.ReadLine() == "1")
+            {
+                goto Load;
+            }
+
+            //gather input
+            Console.Write("   Enter Name: ");
+            string name = Console.ReadLine();
+
+            Console.Write("    Enter Age: ");
+            short age = Convert.ToInt16(Console.ReadLine());
+
+            Console.Write(" Enter Gender: ");
+            char gender = Convert.ToChar(Console.ReadLine());
+
+            //save data to file
+            string save_data = string.Join("\u001F", name, age, gender);
+            File.WriteAllText("TextFile1.txt", save_data);
+
+            //exit point
+            Console.WriteLine("enter \"1\" to escape");
+            if (Console.ReadLine() == "1")
+            {
+                Environment.Exit(0);
+            }
+
+        //to load:
+
+        Load:
+
+            string loaded_file = File.ReadAllText("TextFile1.txt");
+
+            string[] array = loaded_file.Split('\u001F');
+
+            name = array[0];
+            age = Convert.ToInt16(array[1]);
+            gender = Convert.ToChar(array[2]);
+
+            Console.WriteLine($"   Name: {name}\n    Age: {age}\n Gender: {gender}");
         }
-        static void experimentStringInterpolation()
+        static void Save4()
         {
-            //use $ to initalize string interpolation
-            string name = "Sam";
-            int age = 24;
-            Console.WriteLine($"Hi, my name is {name}, and I am {age}");
+            Console.WriteLine("Hello World");
+            FileStream fs = new FileStream("Test.txt", FileMode.Create);
+            // First, save the standard output.
+            TextWriter tmp = Console.Out;
+            StreamWriter sw = new StreamWriter(fs);
+            Console.SetOut(sw);
+            Console.WriteLine("Hello file");
+            Console.SetOut(tmp);
+            Console.WriteLine("Hello World");
+            sw.Close();
         }
-        static void experimentStrings()
+
+        static void hello1()
         {
-            string name = "John";
-            int age = 27;
-            Console.WriteLine("Hi, my name is {0}, but people call me {0}," +
-                " I am {1}, which means I am {1} years old", name, age);
-            Console.WriteLine("Hi, my name is {0}, I am {1}," +
-                " which means I am {0} and I'm {1} years old ", name, age);
+            Console.CursorVisible = false;
+            string msg = "-- Hello World ";
+
+            //creates queue in order to cycle through a message
+            Queue<char> queue = new Queue<char>();
+
+            foreach (char c in msg)
+            {
+                queue.Enqueue(c);
+            }
+
+            Console.WriteLine("*****************\n" +
+                        "*               *\n" +
+                        "*****************");
+
+            while (true)
+            {
+                Console.SetCursorPosition(1, 1);
+
+                foreach (char c in queue)
+                {
+                    Console.Write(c);
+                }
+                //cycle through message (clockwise)
+                queue.Enqueue(queue.Peek());
+                queue.Dequeue();
+
+                Thread.Sleep(500);
+            }
         }
+        static void hello2()
+        {
+            Console.CursorVisible = false;
+            string msg = "-- Hello World ";
+
+            //creates list in order to cycle through a message
+            List<char> list = new List<char>();
+
+            foreach (char c in msg)
+            {
+                list.Add(c);
+            }
+
+            Console.WriteLine("*****************\n" +
+                "*               *\n" +
+                "*****************");
+
+            while (true)
+            {
+                Console.SetCursorPosition(1, 1);
+
+                foreach (char c in list)
+                {
+                    Console.Write(c);
+                }
+                //cycle through message (counter clockwise)
+                list.Insert(0, list[list.Count - 1]);
+                list.RemoveAt(list.Count - 1);
+
+                Thread.Sleep(500);
+            }
+        }
+        static void MultiThreading()
+        {
+            DateTime startTime = DateTime.Now;
+
+            Thread t1 = new Thread(() =>
+            {
+                int numberOfSeconds = 0;
+                while (numberOfSeconds < 5)
+                {
+
+                    Console.Write(numberOfSeconds);
+                    Thread.Sleep(1000);
+
+                    numberOfSeconds++;
+                }
+
+                Console.WriteLine("I ran for 5 seconds");
+            });
+
+            Thread t2 = new Thread(() =>
+            {
+                int numberOfSeconds = 0;
+                while (numberOfSeconds < 8)
+                {
+                    if (!(numberOfSeconds == 5))
+                    {
+                        Console.Write(numberOfSeconds);
+                    }
+                    Thread.Sleep(1000);
+
+                    numberOfSeconds++;
+                }
+
+                Console.WriteLine("I ran for 8 seconds");
+            });
+
+
+            //parameterized thread
+            Thread t3 = new Thread(p =>
+            {
+                int numberOfSeconds = 0;
+                while (numberOfSeconds < Convert.ToInt32(p))
+                {
+                    Thread.Sleep(1);
+                    if (!(numberOfSeconds == 5 || numberOfSeconds == 8))
+                    {
+                        Console.WriteLine(numberOfSeconds);
+                    }
+                    Thread.Sleep(999);
+
+                    numberOfSeconds++;
+                }
+
+                Console.WriteLine("I ran for {0} seconds", numberOfSeconds);
+            });
+
+            t1.Start();
+            t2.Start();
+            //passing parameter to parameterized thread
+            t3.Start(20);
+
+            //wait for t1 to fimish
+            t1.Join();
+
+            //wait for t2 to finish
+            t2.Join();
+
+            //wait for t3 to finish
+            t3.Join();
+
+
+            Console.WriteLine("All Threads Exited in {0} seconds", (DateTime.Now - startTime).TotalSeconds);
+
+        }
+        static void CursorSize()
+        {
+            Console.CursorSize = 10;
+
+            string m0 = "This example increments the cursor size from 1% to 100%:\n";
+            string m1 = "Cursor size = {0}%. (Press any key to continue...)";
+            int[] sizes = { 1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
+            int saveCursorSize;
+            //
+            saveCursorSize = Console.CursorSize;
+            Console.WriteLine(m0);
+            foreach (int size in sizes)
+            {
+                Console.CursorSize = size;
+                Console.WriteLine(m1, size);
+                Console.ReadKey();
+            }
+            Console.CursorSize = saveCursorSize;
+        }
+        class Thing
+        {
+            public int val;
+
+            public Thing(int o)
+            {
+                val = o;
+            }
+        }
+        public static bool cont = true;
+        public static Thread inputThread = new Thread(o =>
+        {
+            while (true && cont)
+            {
+
+                if (Console.KeyAvailable)
+                {
+                    Console.WriteLine(Console.ReadKey(true).Key);
+                }
+            }
+        });
         static void Main(string[] args)
         {
-            List<int> hey = new List<int> { 1, 2, 3, };
 
-            //Functions List 
+            ConsoleKeyInfo key;
+
+            char cap = 'a';
+
+
+
+            while (true)
+            {
+                
+                if (Console.KeyAvailable)
+                {
+
+
+                    key = Console.ReadKey(true);
+
+
+                    if (key.KeyChar == cap) { continue; }
+
+                    Console.WriteLine(key.KeyChar);
+                    cap = key.KeyChar;
+
+
+                    Thread.Sleep(100);
+                    
+
+                }
+
+
+            }
+
+
+
+
             /*
-            letterCallBack();            
-            Console.ReadLine();
-
-            stringIndex();
-
-            largerNumber();
-
-            Console.WriteLine("Exponents!");
-            Console.Write("Base: ");
-            int powerBase = Convert.ToInt32(Console.ReadLine());
-            Console.Write("Exponent: ");
-            int powerExponent = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine(powerFunc(ref powerExponent, powerBase));
-            Console.WriteLine("-----\n");
-
-            waitTime();
-
-            randLetter();
-
-            randLetter2();
-
-            questionMark();
-
-            experimentInput();
-
-            experimentArr();
-
-            experimentArr2();
-
-            experimentStringPlaceholders();
-
-            experimentStringInterpolation()
-
-            experimentStrings
-
+            Save1();
+            Save2();
+            Save3();
+            Save4();
+            hello1();
+            hello2();
+            MultiThreading();
             */
+
+
 
         }
     }
