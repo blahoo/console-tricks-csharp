@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Another
 {
-    internal class Program
+    class Program
     {
         static void letterCallBack()
         {
