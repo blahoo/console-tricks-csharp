@@ -11,7 +11,7 @@ using System.Xml.Linq;
 
 namespace Another3
 {
-    internal class Program
+    class Program
     {
         static void Save1()
         {
