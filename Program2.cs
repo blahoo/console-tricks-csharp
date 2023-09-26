@@ -10,10 +10,8 @@ using System.Drawing;
 
 namespace Another2
 {
-    internal class Program
+    class Program
     {
-        
-
         static void Time()
         {
             // print the system date and time
